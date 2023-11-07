@@ -7,6 +7,7 @@ Highlights: Predicts both main types of transcription terminators in E coli, sco
 How to get it and dependencies (details below): github
 
 Example of use with test files: perl PredictTerm.pl -pred input_genome.fna -out input_genome.out 
+perl PredictTerm.pl -pred NC_000913.fna -out NC_000913.out
 
 Main input (detail below): fna file, [gff file of CDS positions]
 
