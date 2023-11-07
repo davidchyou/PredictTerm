@@ -1,6 +1,6 @@
 # PredictTerm
-This is a repository for a publication in preparation
-Description: Predicts Rho-dependent (RDT) and Intrinsic Terminators (IT) from a bacterial genome sequence.
+
+Description: Predicts Rho-dependent (RDT) and Intrinsic Terminators (IT) from a bacterial genome sequence. This is a repository for a publication in preparation.
 
 Highlights: Predicts both main types of transcription terminators in E coli, scores results.
 
