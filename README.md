@@ -43,9 +43,11 @@ Don't forget the reverse strand! (-rc)
 
 **Retrain and predict**
 
-Random Forests in PredictTerm were trained based on E coli terminators published by Dar and Sorek. The application as a whole were tested on terminators in a different E coli strain reported by Ju et al. For non-E coli terminators, users can use the training layer to train a different set of RDT and IT random forests based on the training set given, and then predict terminators and call types using the trained random forests. The arugments "-rdt_train" and "-rit_train" specifies the RDT and IT training sets respectively. The argument "-genome" specifies the genome where the training sets were derived, PredictTerm will generated shuffled genomic extracts from that to create the negative set. If the "-genome" argument is not used, negative training set will be generated randomly where nucleotide compositions are all 0.25.
+Random Forests in PredictTerm were trained based on E coli terminators published by Dar and Sorek. The application as a whole were tested on terminators in a different E coli strain reported by Ju et al. For non-E coli terminators, users can use the training layer to train a different set of RDT and IT random forests based on the training set given, and then predict terminators and call types using the trained random forests. The arugments "-rdt_train" and "-rit_train" specifies the RDT and IT training sets respectively. The argument "-genome" specifies the genome where the training sets were derived, PredictTerm will generated shuffled genomic extracts from that to create the negative set. If the "-genome" argument is not used, negative training set will be generated randomly where nucleotide compositions are all 0.25. Here is an example.
 
-         perl PredictTerm.pl -rit_train test_set_ds/test_rit_ds.fna -rdt_train test_set_ds/test_rdt_ds.fna -genome test_set_ds -pred test_set_ju/NC_000913.tt.pe.fna -out NC_000913_out_pe
+         perl PredictTerm.pl -rit_train test_set_ds/test_rit_ds.fna -rdt_train test_set_ds/test_rdt_ds.fna -genome test_set_ds/GCF_000750555.fna test_set_ds -pred test_set_ju/NC_000913.tt.pe.fna -out NC_000913_out_retrain -ref_bed test_set_ju/NC_000913.tt.pe.bed
+
+Leave-half-out cross-validation will be performed during training. ROC-curves and AUC statistics will be generated for reporting. Retraining will not replace the default random forests (which were trained based on RDT and IT reported by Dar and Sorek).  
 
 Main input (detail below): fna file, [gff file of CDS positions]
 
