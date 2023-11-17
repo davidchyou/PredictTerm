@@ -34,7 +34,7 @@ By default, PredictTerm will report the position of terminator, the type, RDT an
 
 Main input (detail below): fna file, [gff file of CDS positions]
 
-Main output (detail below): Terminator predictions site, type, scores
+Main output (detail below): Terminator predictions site, type, scores 
 
 Advanced features you may want to change: Can retain on different genome, e.g. one with a different GC%.
 
