@@ -18,7 +18,7 @@ All executables are provided, including the version of Infernal used by the IT-p
 - R library Biostrings (BiocManager::install("Biostrings"))
 - R library randomForest (install.packages("randomForest"))
 
-**Example of use**
+**Basis uses**
 
 When input is a set of genomic extracts in multi-FASTA format, specifying the input file path and the path of output directory will suffice.
 
@@ -31,6 +31,10 @@ By default, PredictTerm uses a set of random forests that are trained on RDT and
 By default, PredictTerm will report the position of terminator, the type, RDT and IT scores in BED6 format, relative to the input sequences. If input sequences are extracted from a genome and genomic positions of input sequences are available in BED6 format, PredictTerm will convert terminator positions into true genomic coordinates by providing it using the "-ref_bed" argument. 
 
         perl PredictTerm.pl -pred test_set_ju/NC_000913.tt.pe.fna -out NC_000913_out_pe -ref_bed test_set_ju/NC_000913.tt.pe.bed
+
+**Scanning the whole genome**
+
+Because PredictTerm can slide along sequences to predict terminators and call types, and report the results in BED6 format, it has the capacity to scan for terminators in a genome and call types. We can use. 
 
 Main input (detail below): fna file, [gff file of CDS positions]
 
