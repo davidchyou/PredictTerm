@@ -34,7 +34,7 @@ By default, PredictTerm will report the position of terminator, the type, RDT an
 
 **Scanning the whole genome**
 
-Because PredictTerm can slide along sequences to predict terminators and call types, and report the results in BED6 format, it has the capacity to scan for terminators in a genome and call types. We can use. 
+Because PredictTerm can slide along sequences to predict terminators and call types, and report the results in BED6 format, it has the capacity to scan for terminators in a genome and call types. PredictTerm will digitize sequences longer than 325nt into windows of 325nt, and the argument -window_size 
 
 Main input (detail below): fna file, [gff file of CDS positions]
 
