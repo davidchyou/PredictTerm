@@ -8,10 +8,15 @@ Highlights: Predicts both main types of transcription terminators in E coli and 
 
 **Dependencies**
 
-All executables are provided, including the version of Infernal used by the IT-predictor RNIE as well as other RNIE dependencies.
+All executables are provided, including the version of Infernal used by the IT-predictor RNIE as well as other RNIE dependencies. R libraries need to be installed separately using the "install.packages" function. The "Biostrings" package is part of Bioconductor which involves the installation of "BiocManager" (install.packages("BiocManager")) if not previously installed.
 
-
-How to get it and dependencies (details below): github
+-RNIE (provided)
+-Bedtools (provided)
+-R library stringr (install.packages("stringr"))
+-R library zoo (install.packages("zoo"))
+-R library dplyr (install.packages("dplyr"))
+-R library Biostrings (BiocManager::install("Biostrings"))
+-R library randomForest (install.packages("randomForest"))
 
 Example of use with test files: perl PredictTerm.pl -pred input_genome.fna -out input_genome.out 
 perl PredictTerm.pl -pred NC_000913.fna -out NC_000913.out
