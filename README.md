@@ -1,8 +1,12 @@
 # PredictTerm
 
-Description: Predicts Rho-dependent (RDT) and Intrinsic Terminators (IT) from a bacterial genome sequence. This is a repository for a publication in preparation.
+**What it does?**
+PredictTerm predicts Rho-dependent (RDT) and Intrinsic Terminators (IT) from a bacterial genome sequence. It is based on the set of RDT features published by Nadiras et al., combining with IT prediction scores from the IT-prediction software RNIE, together with features around mRNA processed-ends that distinguishes IT and RDT from non-terminators, and between the two. Two random forests are trained to score for RDT and IT based on the aforementioned parameters, the RDT and IT scores were then used to classify terminators into IT, RDT, both IT and RDT (IT+RDT) and unclassified. Unclassified sequences can be non-terminators, or novel terminators when sequences are transcription terminator extracts. This is a repository for a publication in preparation.
 
-Highlights: Predicts both main types of transcription terminators in E coli, scores results.
+Highlights: Predicts both main types of transcription terminators in E coli and scores results.
+
+**Dependencies**
+All executables are provided, particularly the version of Infernal used by the IT-predictor RNIE.
 
 How to get it and dependencies (details below): github
 
