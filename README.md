@@ -53,12 +53,15 @@ Leave-half-out cross-validation will be performed during training. ROC-curves an
 
 PredictTerm can be used to predict strong terminators and type them as IT, RDT, IT+RDT or unclassified. While "unclassified terminators" may be non-terminators, these can be novel terminators if within terminator regions or near gene termini. Terminators found within transcribed regions or operons may have regulatory roles. As an example, we can use PredictTerm to understand the role of Rho factor and RDT in termination. 
 
-Main input (detail below): fna file, [gff file of CDS positions]
+**Related Software**
 
-Main output (detail below): Terminator predictions site, type, scores 
+PredictTerm is unique in the way that it predicts both IT and RDT and classify them accurately. It is also easy of use. Here is a list of related software, some of them can be co-used with PredictTerm to enhance terminator prediction.
 
-Advanced features you may want to change: Can retain on different genome, e.g. one with a different GC%.
+- RNIE: This IT predictor called by PredictTerm as a dependency to assist with conventional IT prediction. It uses Infernal and pretrained coveriation model of intrinsic terminators.
+- TransTermHP: This is a pattern-based intrinsic terminator predictor. The accuracy is good but requires non-standard data files for CDS annotations.
+- RhoTermPredict: This is a pattern-based RDT predictor, it scans for RDT in genomes or sequences efficiently with moderately-level of accuracy. The RDT pattern used by RhoTermPredict was also considered by Nadiras's RDT predictor, and random forests of PredictTerm uses these as part of the parameter set.
+- Nadiras RDT classifier: The RDT classifier implemented by Nadiras et al. collects features and patterns relevant to RDT. Partial least-square discriminant analysis was then used to classify sequences into strong RDT, weak RDT and non-RDT with excellent reported accuracy. The Python script generating the RDT parameter is publicly available, but the classifier is private and requires paid software (SIMCA) to run.
+- iTerm-PseKNC: This terminator predictor uses physicochemical and pseudonucleotide compositions to predict terminators, but does not call types. It is highly accurate on intrinsic terminators.
+- BATTER (unpublished but available on BioXriv): It is a "terminator or not" terminator predictor like iTerm-PseKNC. It is based on a language model of terminator stem-loops, including both RDT and IT. The reported accuracy is excellent for in RDT and IT, and also terminators in genomes with biased nucleotide distributions. However, although BATTER predicts both RDT and IT as terminators, it does not distinguish between RDT and IT, nor handling the case where an IT stem-loop is upstream to a RDT site (IT+RDT). Terminator type calling is the competitive advantage of PredictTerm.
 
-What to do with the output: Predicts strong and weak terminators weak terminators may have regulatory roles. Understanding the role of Rho and RDT in termination.
-
-What is similar? PredictTerm is unique in predict both IT and RDT is ease of use and accuracy.  Previous IT predictors: RNIE, TransTermHP, RDT predictor: RhoTermPredict.
+Users may consider using iTerm-PseKNC or BATTER to scan for terminators in genomes or sequences, and then apply PredictTerm on putative terminator regions to determine terminator types.
