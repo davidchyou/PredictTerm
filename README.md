@@ -49,6 +49,10 @@ Random Forests in PredictTerm were trained based on E coli terminators published
 
 Leave-half-out cross-validation will be performed during training. ROC-curves and AUC statistics will be generated for reporting. Retraining will not replace the default random forests (which were trained based on RDT and IT reported by Dar and Sorek).  
 
+**What to do with the output?**
+
+PredictTerm can be used to predict strong terminators and type them as IT, RDT, IT+RDT or unclassified. While "unclassified terminators" may be non-terminators, these can be novel terminators if within terminator regions or near gene termini. Terminators found within transcribed regions or operons may have regulatory roles. As an example, we can use PredictTerm to understand the role of Rho factor and RDT in termination. 
+
 Main input (detail below): fna file, [gff file of CDS positions]
 
 Main output (detail below): Terminator predictions site, type, scores 
