@@ -2,13 +2,13 @@
 
 **What it does?**
 
-PredictTerm predicts Rho-dependent (RDT) and Intrinsic Terminators (IT) from a bacterial genome sequence. It is based on the set of RDT features published by Nadiras et al., combining with IT prediction scores from the IT-prediction software RNIE, together with features around mRNA processed-ends that distinguishes IT and RDT from non-terminators, and between the two. Two random forests are trained to score for RDT and IT based on the aforementioned parameters, the RDT and IT scores were then used to classify terminators into IT, RDT, both IT and RDT (IT+RDT) and unclassified. Unclassified sequences can be non-terminators, or novel terminators when sequences are transcription terminator extracts. This is a repository for a publication in preparation.
+PredictTerm predicts Rho-dependent (RDT) and Intrinsic Terminators (IT) from a bacterial genome sequence. It is based on some known RDT features (Nadiras et al.2019), and with IT prediction scores from the IT-prediction software RNIE (Gardner et al 2011), together with features around mRNA processed-ends that distinguishes IT and RDT from non-terminators, and between the two. Two random forests are trained to score for RDT and IT based on the aforementioned parameters, the RDT and IT scores were then used to classify terminators into IT, RDT, both IT and RDT (IT+RDT) and unclassified. Unclassified sequences can be non-terminators, or novel terminators when sequences are transcription terminator extracts. This is a repository for a publication in preparation.
 
 Highlights: Predicts both main types of transcription terminators in E coli and scores results.
 
 **Dependencies**
 
-All executables are provided, including the version of Infernal used by the IT-predictor RNIE as well as other RNIE dependencies. R libraries need to be installed separately using the "install.packages" function. The "Biostrings" package is part of Bioconductor which involves the installation of "BiocManager" (install.packages("BiocManager")) if not previously installed.
+All executables are provided, including the older version of Infernal used by the IT-predictor RNIE as well as other RNIE dependencies. R libraries need to be installed separately using the "install.packages" function. The "Biostrings" package is part of Bioconductor which involves the installation of "BiocManager" (install.packages("BiocManager")) if not previously installed.
 
 - RNIE (provided)
 - Bedtools (provided)
@@ -18,7 +18,7 @@ All executables are provided, including the version of Infernal used by the IT-p
 - R library Biostrings (BiocManager::install("Biostrings"))
 - R library randomForest (install.packages("randomForest"))
 
-**Basis uses**
+**Basic use**
 
 When input is a set of genomic extracts in multi-FASTA format, specifying the input file path and the path of output directory will suffice.
 
@@ -32,18 +32,18 @@ By default, PredictTerm will report the position of terminator, the type, RDT an
 
         perl PredictTerm.pl -pred test_set_ju/NC_000913.tt.pe.fna -out NC_000913_out_pe -ref_bed test_set_ju/NC_000913.tt.pe.bed
 
-**Scanning the whole genome**
+**Scanning a whole genome**
 
 Because PredictTerm can slide along sequences to predict terminators and call types, and report the results in BED6 format, it has the capacity to scan for terminators in a genome and call types. PredictTerm will digitize sequences longer than 325nt into windows of 325nt, and the argument "-window_shift" can be used to specify the step-size.
 
-        perl PredictTerm.pl -window_shift 40 -pred test_set_ju/NC_000913.fna -out NC_000913_out_plus
+        perl PredictTerm.pl -window_shift 40 -rc -pred test_set_ju/NC_000913.fna -out NC_000913_out_plus
         perl PredictTerm.pl -window_shift 40 -rc -pred test_set_ju/NC_000913.fna -out NC_000913_out_minus
 
 Don't forget the reverse strand! (-rc)
 
-**Retrain and predict**
+**Retraining and prediction**
 
-Random Forests in PredictTerm were trained based on E coli terminators published by Dar and Sorek. The application as a whole were tested on terminators in a different E coli strain reported by Ju et al. For non-E coli terminators, users can use the training layer to train a different set of RDT and IT random forests based on the training set given, and then predict terminators and call types using the trained random forests. The arugments "-rdt_train" and "-rit_train" specifies the RDT and IT training sets respectively. The argument "-genome" specifies the genome where the training sets were derived, PredictTerm will generated shuffled genomic extracts from that to create the negative set. If the "-genome" argument is not used, negative training set will be generated randomly where nucleotide compositions are all 0.25. Here is an example.
+Random Forests in PredictTerm were trained based on E coli terminators published by Dar and Sorek 2016. The application as a whole were tested on terminators in a different E coli strain reported by Ju et al. For non-E coli terminators, users can use the training layer to train a different set of RDT and IT random forests based on the training set given, and then predict terminators and call types using the trained random forests. The arugments "-rdt_train" and "-rit_train" specifies the RDT and IT training sets respectively. The argument "-genome" specifies the genome where the training sets were derived, PredictTerm will generated shuffled genomic extracts from that to create the negative set. If the "-genome" argument is not used, negative training set will be generated randomly where nucleotide compositions are all 0.25. Here is an example.
 
          perl PredictTerm.pl -rit_train test_set_ds/test_rit_ds.fna -rdt_train test_set_ds/test_rdt_ds.fna -genome test_set_ds/GCF_000750555.fna test_set_ds -pred test_set_ju/NC_000913.tt.pe.fna -out NC_000913_out_retrain -ref_bed test_set_ju/NC_000913.tt.pe.bed
 
@@ -62,6 +62,6 @@ PredictTerm is unique in the way that it predicts both IT and RDT and classify t
 - RhoTermPredict: This is a pattern-based RDT predictor, it scans for RDT in genomes or sequences efficiently with moderately-level of accuracy. The RDT pattern used by RhoTermPredict was also considered by Nadiras's RDT predictor, and random forests of PredictTerm uses these as part of the parameter set.
 - Nadiras RDT classifier: The RDT classifier implemented by Nadiras et al. collects features and patterns relevant to RDT. Partial least-square discriminant analysis was then used to classify sequences into strong RDT, weak RDT and non-RDT with excellent reported accuracy. The Python script generating the RDT parameter is publicly available, but the classifier is private and requires paid software (SIMCA) to run.
 - iTerm-PseKNC: This terminator predictor uses physicochemical and pseudonucleotide compositions to predict terminators, but does not call types. It is highly accurate on intrinsic terminators.
-- BATTER (unpublished but available on BioXriv): It is a "terminator or not" terminator predictor like iTerm-PseKNC. It is based on a language model of terminator stem-loops, including both RDT and IT. The reported accuracy is excellent for in RDT and IT, and also terminators in genomes with biased nucleotide distributions. However, although BATTER predicts both RDT and IT as terminators, it does not distinguish between RDT and IT, nor handling the case where an IT stem-loop is upstream to a RDT site (IT+RDT). Terminator type calling is the competitive advantage of PredictTerm.
+- BATTER (unpublished but available as an unreviewed preprint on BioRxiv): It is a "terminator or not" terminator predictor like iTerm-PseKNC. It is based on a language model of terminator stem-loops, including both RDT and IT. The preprint reported accuracy is excellent for in RDT and IT, and also terminators in genomes with biased nucleotide distributions. However, although BATTER predicts both RDT and IT as terminators, it does not distinguish between RDT and IT, nor handling the case where an IT stem-loop is upstream to a RDT site (IT+RDT). Terminator type calling is the competitive advantage of PredictTerm.
 
 Users may consider using iTerm-PseKNC or BATTER to scan for terminators in genomes or sequences, and then apply PredictTerm on putative terminator regions to determine terminator types.
