@@ -55,7 +55,8 @@ PredictTerm can be used to predict strong terminators and type them as IT, RDT, 
 
 **Related Software**
 
-PredictTerm is unique in the way that it predicts both IT and RDT and classify them accurately. It is also easy of use. Here is a list of related software, some of them can be co-used with PredictTerm to enhance terminator prediction.
+PredictTerm is unique in the way that it predicts both IT and RDT and classifies them accurately. It is also easy of use. 
+Here is a list of related software that we comapared in this deveoplment.
 
 - RNIE: This IT predictor called by PredictTerm as a dependency to assist with conventional IT prediction. It uses Infernal and pretrained coveriation model of intrinsic terminators.
 - TransTermHP: This is a pattern-based intrinsic terminator predictor. The accuracy is good but requires non-standard data files for CDS annotations.
